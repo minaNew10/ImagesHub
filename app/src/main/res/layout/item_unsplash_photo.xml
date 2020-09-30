@@ -9,11 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ImageView>
 
-    <view
+    <View
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignBottom="@+id/imgv_unsplash"
-        android:background="@drawable/gradient_user_bg"></view>
+        android:background="@drawable/gradient_user_bg"></View>
 
     <TextView
         android:id="@+id/txtv_username"
