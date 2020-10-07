@@ -9,14 +9,16 @@ import androidx.core.view.isVisible
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.example.imageshub.R
+import com.example.imageshub.data.UnsplashPhoto
 import com.example.imageshub.databinding.FragmentGalleryBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_gallery.*
 
 @AndroidEntryPoint
-class GalleryFragment : Fragment(R.layout.fragment_gallery){
+class GalleryFragment : Fragment(R.layout.fragment_gallery),UnsplashPhotoAdapter.onItemClickListener{
     //because we added @AndroidEntry point Annotation this view Model will be injected with dagger
     private val viewModel by viewModels<GalleryViewModel>()
 
@@ -26,7 +28,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery){
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentGalleryBinding.bind(view)
 
-        val adapter = UnsplashPhotoAdapter()
+        val adapter = UnsplashPhotoAdapter(this)
 
         binding.apply {
             gallery_recycler_view.setHasFixedSize(true)
@@ -65,6 +67,11 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery){
         }
         setHasOptionsMenu(true)
 
+    }
+
+    override fun onItemClick(photo: UnsplashPhoto) {
+        val action = GalleryFragmentDirections.actionGalleryFragmentToDetailsFragment(photo)
+        findNavController().navigate(action)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
